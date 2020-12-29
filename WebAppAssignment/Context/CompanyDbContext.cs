@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAppAssignment.Context.Configurations;
 using WebAppAssignment.Models;
 
 namespace WebAppAssignment.Context
@@ -16,8 +17,11 @@ namespace WebAppAssignment.Context
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Department> Departments { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelVuilder)
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
+            modelBuilder.ApplyConfiguration(new EmployeeCofiguration());
 
         }
     }
