@@ -34,7 +34,7 @@ namespace WebAppAssignment
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAppAssignment", Version = "v1" });
             });
-            services.AddDbContext<CompanyDbContext>(x => x.UseSqlServer(Configuration["connectionString"]));
+            services.AddDbContext<CompanyDbContext>(x => x.UseSqlServer(Configuration["ConnectionString"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
