@@ -68,12 +68,47 @@ namespace WebAppAssignment.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
+        [HttpPut]
         public IActionResult UpdateEmployee(EmployeeViewModel vm)
         {
 
+            var response = new ResponseViewModel();
+
+            
+
+            try
+            {
+                //var employee = new context.Employee.FirstOrDefault(x => x.Id == vm.Id);
+                var employee = new context.Employee.FIrstOrDefault(x => x.Id == vm.Id);
+
+                if (employee != null)
+                {
+                    employee.DepId = vm.DepartmentId;
+                    employee.Email = vm.Email;
+                    employee.FirstName = vm.FirstName;
+                    employee.LastName = vm.LastName;
+
+                    context.Employees.Update(employee);
+                    context.SaveChanges();
+                    response.IsSuccess = true;
+                    response.Message = "Succesfully Update";
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Message = "Employee not exist";
+                }
+
+            }
+            catch(Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.ToString();
+            }
+            return Ok(response);
+
         }
-        [HttpDelete]
+        /*[HttpDelete]
         public IActionResult DeleteEmployee(int id)
         {
 
@@ -82,7 +117,7 @@ namespace WebAppAssignment.Controllers
         public IActionResult GetEmployeeId(int id)
         {
 
-        }
+        }*/
 
     }
 }
