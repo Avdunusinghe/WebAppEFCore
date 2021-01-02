@@ -8,6 +8,7 @@ using WebAppAssignment.Context;
 using WebAppAssignment.Models;
 using WebAppAssignment.ViewModel;
 
+
 namespace WebAppAssignment.Controllers
 {
     [Route("api/[controller]")]
@@ -79,11 +80,12 @@ namespace WebAppAssignment.Controllers
             try
             {
                 //var employee = new context.Employee.FirstOrDefault(x => x.Id == vm.Id);
-                var employee = new context.Employee.FIrstOrDefault(x => x.Id == vm.Id);
+               // var employee = new Employee(x => x.Id == vm.Id);
+                var employee = context.Employees.FirstOrDefault(x => x.Id == vm.Id);
 
                 if (employee != null)
                 {
-                    employee.DepId = vm.DepartmentId;
+                    employee.DeptId = vm.DepartmentId;
                     employee.Email = vm.Email;
                     employee.FirstName = vm.FirstName;
                     employee.LastName = vm.LastName;
@@ -108,16 +110,41 @@ namespace WebAppAssignment.Controllers
             return Ok(response);
 
         }
-        /*[HttpDelete]
+        [HttpDelete]
         public IActionResult DeleteEmployee(int id)
         {
+            var response = new ResponseViewModel();
+            var employee = context.Employees.FirstOrDefault(x => x.Id == id);
 
+            try
+            {
+                if (employee != null)
+                {
+                    context.Remove<Employee>(employee);
+                    context.SaveChanges();
+                    response.IsSuccess = true;
+                    response.Message = "Succesfully Update";
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Message = "Employee not exist";
+                }
+           
+            }
+            catch(Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.ToString();
+            }
+            return Ok(response);
         }
         [HttpGet]
         public IActionResult GetEmployeeId(int id)
         {
-
-        }*/
+            var response = new ResponseViewModel();
+            var employee = context.Employees.FirstOrDefault(x => x.Id == id);
+        }
 
     }
 }
