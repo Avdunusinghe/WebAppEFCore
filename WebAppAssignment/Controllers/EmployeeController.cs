@@ -123,7 +123,7 @@ namespace WebAppAssignment.Controllers
                     context.Remove<Employee>(employee);
                     context.SaveChanges();
                     response.IsSuccess = true;
-                    response.Message = "Succesfully Update";
+                    response.Message = "Succesfully Delete";
                 }
                 else
                 {
@@ -139,12 +139,42 @@ namespace WebAppAssignment.Controllers
             }
             return Ok(response);
         }
-        [HttpGet]
+      /* [HttpGet]
         public IActionResult GetEmployeeId(int id)
         {
             var response = new ResponseViewModel();
             var employee = context.Employees.FirstOrDefault(x => x.Id == id);
-        }
+
+            try
+            {
+                if (employee != null)
+                {
+                    var evm = new BesicEmployeeViewModel();
+                    evm.Department = employee.Department.Name;
+                    evm.Email = employee.Email;
+                    evm.Id = employee.Id;
+                    evm.Name = employee.FirstName + " " + employee.LastName;
+                    
+                    response.IsSuccess = true;
+                    response.Message = "Db Operation Succesfully";
+                    
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Message = "Employee not exist";
+                }
+            }
+            catch(Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.ToString();
+            }
+
+            return Ok(response);
+
+
+        }*/
 
     }
 }
