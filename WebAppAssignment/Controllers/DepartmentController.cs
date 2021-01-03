@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -139,25 +140,51 @@ namespace WebAppAssignment.Controllers
 
         public IActionResult GetDeparmentDetail(int id)
         {
-            var response = new List<DepartmentViewModel>();
-            var findDepartment = context.Departments.ToList();
-            findDepartment.FirstOrDefault(x => x.Id == id);
+            var response = new ResponseViewModel();
+            var fineDepartment = context.Departments
+                 .Where(x => x.Id == id)
+                 .Include(x => x.Id)
+                 .Include(x => x.Name)
+                 .Include(x => x.Location)
+                 .Include(x => x.Extention)
+                 .FirstOrDefault();
 
+            response.IsSuccess = true;
+            response.Message = "Succesfully";
 
-            try
-            {
-                if(findDepartment != null)
-                {
-                    var dvm = new DepartmentViewModel();
-                    dvm.Id = findDepartment.Id;
-                    dvm.DepartmentName = findDepartment.Name;
-                    dvm.Location = findDepartment.Location;
-                    dvm.Extention = findDepartment.Extention;
+            response.IsSuccess = false;
+            response.Message = "Department not exist";
 
-                    
-                }
-            }
-        }*/
+            return Ok(response);
+
+            /* var fineDepartment = context.Departments.FirstOrDefault(x => x.Id == id);
+
+             try
+             {
+                 if (fineDepartment != null)
+                 {
+                     var dvm = new DepartmentViewModel();
+                     dvm.Id = fineDepartment.Id;
+                     dvm.DepartmentName = fineDepartment.Name;
+                     dvm.Location = fineDepartment.Location;
+                     dvm.Location = fineDepartment.Location;
+
+                     response.IsSuccess = true;
+                     response.Message = "Succesfully";
+                 }
+                 else
+                 {
+                     response.IsSuccess = false;
+                     response.Message = "Department not exist";
+                 }
+             }
+
+              catch (Exception ex)
+             {
+                 response.IsSuccess = false;
+                 response.Message = ex.ToString();*/
+        //}
 
     }
-}
+
+    }
