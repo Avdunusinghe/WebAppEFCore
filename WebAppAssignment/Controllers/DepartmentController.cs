@@ -135,7 +135,29 @@ namespace WebAppAssignment.Controllers
 
 
         }
-  
+        /*[HttpGet]
+
+        public IActionResult GetDeparmentDetail(int id)
+        {
+            var response = new List<DepartmentViewModel>();
+            var findDepartment = context.Departments.ToList();
+            findDepartment.FirstOrDefault(x => x.Id == id);
+
+
+            try
+            {
+                if(findDepartment != null)
+                {
+                    var dvm = new DepartmentViewModel();
+                    dvm.Id = findDepartment.Id;
+                    dvm.DepartmentName = findDepartment.Name;
+                    dvm.Location = findDepartment.Location;
+                    dvm.Extention = findDepartment.Extention;
+
+                    
+                }
+            }
+        }*/
 
     }
 }
