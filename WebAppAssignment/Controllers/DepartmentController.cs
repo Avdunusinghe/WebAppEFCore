@@ -67,6 +67,74 @@ namespace WebAppAssignment.Controllers
             return Ok(response);
         }
 
+        [HttpPut]
+
+        public IActionResult UpdateDepartment(DepartmentViewModel dvm)
+        {
+            var response = new ResponseViewModel();
+
+            try
+            {
+                var department = context.Departments.FirstOrDefault(x => x.Id == dvm.Id);
+
+                if (department != null)
+                {
+                    department.Id = dvm.Id;
+                    department.Name = dvm.DepartmentName;
+                    department.Extention = dvm.Extention;
+                    department.Location = dvm.Location;
+
+                    context.Departments.Update(department);
+                    context.SaveChanges();
+                    response.IsSuccess = true;
+                    response.Message = "Successfully update Department";
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Message = "Erorr";
+                }
+            }
+            catch(Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.ToString();
+            }
+            return Ok(response);
+        }
+        [HttpDelete]
+
+        public IActionResult DeleteDepartment(int id )
+        {
+            var response = new ResponseViewModel();
+            var department = context.Departments.FirstOrDefault(x => x.Id == id);
+
+            try
+            {
+                if(department != null)
+                {
+                    context.Remove<Department>(department);
+                    context.SaveChanges();
+                    response.IsSuccess = true;
+                    response.Message = "Department Delete Succesfully";
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Message = "Department not found";
+                }
+
+
+            }
+            catch(Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.ToString();
+            }
+            return Ok(response);
+
+
+        }
   
 
     }
